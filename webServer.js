@@ -9,26 +9,25 @@ const server = http.createServer(function (req, res) {
     // var filename
 
     let filePath = '.' + req.url;
-    if(filePath === "./") filePath = "./index.html";
+    if (filePath === "./") filePath = "./index.html";
 
     const extname = path.extname(filePath);
     let contentType = "text/html";
-    if(extname === ".css") contentType = "text/css";
-    if(extname === ".xml") contentType = "text/xml"
-    if(extname === ".js") contentType = "application/js";
+    if (extname === ".css") contentType = "text/css";
+    if (extname === ".xml") contentType = "text/xml"
+    if (extname === ".js") contentType = "application/js";
 
-    fs.readFile(filePath, function(err, htmlDoc){
-        if(err){
-            res.writeHead(200, {'Content-Type': 'text/html'});
+    fs.readFile(filePath, function (err, htmlDoc) {
+        if (err) {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
             return res.end("404: file not Found")
         }
-        res.writeHead(200, {'Content-Type': contentType});
+        res.writeHead(200, { 'Content-Type': contentType });
         var q = url.parse(req.url, true).query;
-        var txt = q.fname+' '+q.lname;
+        var txt = q.fname + ' ' + q.lname;
         res.write(htmlDoc);
-        res.end();    
+        res.end();
     });
-
 });
 
 server.listen(8080);
